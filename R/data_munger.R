@@ -31,7 +31,21 @@ DataMunger <- R6Class("DataMunger",
         lapply(sd, mean))
     },
 
-    melt_df = function() {
+    melt_df = function(scale) {
+      if (scale == "cartesian") {
+        self$melt_df_cartesian()
+      } else if (scale == "uniform") {
+        self$melt_df_uniform()
+      }
+    },
+
+    melt_df_cartesian = function() {
+      self$melted_df <- melt(self$bucketed_df[, !"grp_by_col", with = FALSE],
+                             id.vars = self$by_col)
+      setkeyv(self$melted_df, self$by_col)
+    },
+
+    melt_df_uniform = function() {
       self$melted_df <- melt(self$bucketed_df,
                              id.vars = "grp_by_col")
       setkey(self$melted_df, grp_by_col)

@@ -14,7 +14,7 @@ universe <- function(input_df,
   pp <- PlotlyPlotter$new(scale)
 
   dm$bucket_data(buckets)
-  dm$melt_df()
+  dm$melt_df(scale)
 
   pp$plot_df(dm)
 }

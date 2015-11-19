@@ -24,10 +24,10 @@ PlotlyPlotter <- R6Class("PlotlyPlotter",
     },
 
     plot_df_hist = function(dm) {
-      lines_df <- dm$melted_df[variable != "weight" & variable != dm$by_col]
+      lines_df <- dm$melted_df[variable != "weight"]
 
-      plot_ly(dm$melted_df,
-              x = grp_by_col,
+      plot_ly(lines_df,
+              x = get(dm$by_col),
               y = value,
               group = variable) %>%
         add_trace(x = dm$df[[dm$by_col]],
@@ -56,7 +56,5 @@ PlotlyPlotter <- R6Class("PlotlyPlotter",
                   yaxis = "y2") %>%
         layout(yaxis2 = self$secondary_axis_options)
     }
-
-
   )
 )
