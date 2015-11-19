@@ -1,4 +1,6 @@
 DataMunger <- R6Class("DataMunger",
+  # Handle everything to do with producing a melted dataframe to feed into plot
+  # methods later.
   public = list(
     plot_cols = NA,
     by_col = NA,
@@ -49,41 +51,6 @@ DataMunger <- R6Class("DataMunger",
       self$melted_df <- melt(self$bucketed_df,
                              id.vars = "grp_by_col")
       setkey(self$melted_df, grp_by_col)
-    }
-  )
-)
-
-VectorBucketer <- R6Class("VectorBucketer",
-  public = list(
-    cut_type = NA,
-
-    initialize = function(cut_type) {
-      self$cut_type <- cut_type
-    },
-
-    cut_vector = function(cut_vector, buckets) {
-      if (self$cut_type == "even") {
-        return(self$cut_evenly(cut_vector, buckets))
-      }
-      if (self$cut_type == "quantile") {
-        return(self$cut_by_quantile(cut_vector, buckets))
-      }
-      else {
-        stop("cut_type not recognised!", call. = FALSE)
-      }
-    },
-
-    cut_evenly = function(cut_vector, buckets) {
-      lower <- min(cut_vector)
-      upper <- max(cut_vector)
-      cut_points <- seq(lower, upper, length.out = buckets)
-      cut(cut_vector, breaks = cut_points, include.lowest = TRUE)
-    },
-
-    cut_by_quantile = function(cut_vector, buckets) {
-      quantiles <- seq(0, 1, length.out = buckets)
-      cut_points <- quantile(cut_vector, probs = quantiles)
-      cut(cut_vector, breaks = cut_points, include.lowest = TRUE)
     }
   )
 )

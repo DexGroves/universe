@@ -1,4 +1,5 @@
 PlotlyPlotter <- R6Class("PlotlyPlotter",
+  # Create plotly objects from a melted dataframe.
   public = list(
     scale = NA,
 

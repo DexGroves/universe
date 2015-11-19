@@ -1,10 +1,8 @@
 Package: universe
-Title: What the Package Does (one line, title case)
-Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-Depends: R (>= 3.2.2)
-License: What license is it under?
+Title: Simple Univariate Plotting
+Version: 0.1
+Authors@R: person("Dex", "Groves", email = "dex.groves@gmail.com", role = c("aut", "cre"))
+Description: Bucket data and draw univariate plots in plotly. Univariate plots show the variation of one or more variable versus one covariate. universe will also draw a neat exposure histogram.
+Depends: R (>= 3.2.2), R6
+License: GPL (>= 2)
 LazyData: true
-LinkingTo: Rcpp
-Imports: Rcpp
