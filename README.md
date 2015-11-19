@@ -13,6 +13,13 @@ exposure histogram.
 
 ## How to plot
 ```R
+# devtools::install_github("DexGroves/universe")
+
+library("ggplot2")
+library("universe")
+
+data(diamonds)
+
 diamonds %>%
   universe(plot_cols = c("x", "y", "z"),
            by_col = "price",
@@ -20,4 +27,4 @@ diamonds %>%
            cut_type = "quantile",
            scale = "cartesian")
 ```
-[Produces this chart](https://rawgit.com/dexgroves/universe/master/example/index.html)
+[Produces this chart](https://rawgit.com/dexgroves/universe/html/example/index.html)
