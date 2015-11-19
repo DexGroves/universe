@@ -8,6 +8,9 @@ VectorBucketer <- R6Class("VectorBucketer",
     },
 
     cut_vector = function(cut_vector, buckets) {
+      if (is.factor(cut_vector) | is.character(cut_vector)) {
+        return(self$cut_factor_by_exposure(cut_vector, buckets))
+      }
       if (self$cut_type == "even") {
         return(self$cut_evenly(cut_vector, buckets))
       }
@@ -23,13 +26,18 @@ VectorBucketer <- R6Class("VectorBucketer",
       lower <- min(cut_vector)
       upper <- max(cut_vector)
       cut_points <- seq(lower, upper, length.out = buckets)
-      cut(cut_vector, breaks = cut_points, include.lowest = TRUE)
+      cut(cut_vector, breaks = unique(cut_points), include.lowest = TRUE)
     },
 
     cut_by_quantile = function(cut_vector, buckets) {
       quantiles <- seq(0, 1, length.out = buckets)
       cut_points <- quantile(cut_vector, probs = quantiles)
-      cut(cut_vector, breaks = cut_points, include.lowest = TRUE)
+      cut(cut_vector, breaks = unique(cut_points), include.lowest = TRUE)
     }
+    # ,
+
+    # cut_factor_by_exposure = function(cut_vector, buckets) {
+
+    # }
   )
 )

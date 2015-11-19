@@ -17,7 +17,10 @@ DataMunger <- R6Class("DataMunger",
     },
 
     generate_core_df = function(input_df) {
-      data.table(input_df[, c(self$by_col, self$plot_cols)])
+      if (!is.data.table(input_df)) {
+        return(data.table(input_df[, c(self$by_col, self$plot_cols)]))
+      }
+      input_df[, c(self$by_col, self$plot_cols), with = FALSE]
     },
 
 

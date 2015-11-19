@@ -3,6 +3,4 @@
 export(universe)
 import(R6)
 import(data.table)
-import(magrittr)
 import(plotly)
-import(reshape2)

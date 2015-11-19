@@ -16,7 +16,8 @@ plot against by_col}
 \item{by_col}{string naming the x-variable against which the plot_cols are
 measured}
 
-\item{buckets}{number of buckets into which to attempt to reduce the data}
+\item{buckets}{number of buckets into which to attempt to reduce the data.
+Defaults to 10.}
 
 \item{cut_type}{either "even" or "quantile". Defaults to "even".
 \itemize{

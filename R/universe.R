@@ -9,10 +9,8 @@
 #' the plot_cols vs by_col with a histogram of by_col's exposure.
 #'
 #' @import plotly
-#' @import magrittr
 #' @import R6
 #' @import data.table
-#' @import reshape2
 #' @export
 #'
 #' @param input_df input data.frame or data.table
@@ -20,7 +18,8 @@
 #' plot against by_col
 #' @param by_col string naming the x-variable against which the plot_cols are
 #' measured
-#' @param buckets number of buckets into which to attempt to reduce the data
+#' @param buckets number of buckets into which to attempt to reduce the data.
+#' Defaults to 10.
 #' @param cut_type either "even" or "quantile". Defaults to "even".
 #' \itemize{
 #'   \item{"even"}{ Cut data into evenly spaced buckets from the min to the max
