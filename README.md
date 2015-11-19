@@ -9,6 +9,7 @@ exposure histogram.
 ## Things that don't work (non exhaustive)
 1. Factors
 2. Weights
+3. Axis labels
 
 ## How to plot
 ```R
@@ -19,3 +20,4 @@ diamonds %>%
            cut_type = "quantile",
            scale = "cartesian")
 ```
+[Produces this chart](https://rawgit.com/dexgroves/universe/master/example/index.html)
