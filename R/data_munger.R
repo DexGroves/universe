@@ -21,13 +21,19 @@ DataMunger <- R6Class("DataMunger",
 
     bucket_data = function(buckets) {
       self$df[, grp_by_col := self$vb$cut_vector(get(self$by_col), buckets)]
-      self$bucketed_df <- self$df[, lapply(.SD, mean),
-                                  .SDcols = self$plot_cols, by = grp_by_col]
-      invisible()
+      self$bucketed_df <- self$df[, self$reduce_df(.SD),
+                                  .SDcols = c(self$plot_cols, self$by_col),
+                                  by = grp_by_col]
+    },
+
+    reduce_df = function(sd) {
+      c(weight = as.double(nrow(sd)),
+        lapply(sd, mean))
     },
 
     melt_df = function() {
-      self$melted_df <- melt(self$bucketed_df, id.vars = "grp_by_col")
+      self$melted_df <- melt(self$bucketed_df,
+                             id.vars = "grp_by_col")
       setkey(self$melted_df, grp_by_col)
     }
   )
@@ -46,10 +52,10 @@ VectorBucketer <- R6Class("VectorBucketer",
         return(self$cut_evenly(cut_vector, buckets))
       }
       if (self$cut_type == "quantile") {
-        return(self$cut_evenly(cut_vector, buckets))
+        return(self$cut_by_quantile(cut_vector, buckets))
       }
       else {
-        stop("cut type not recognised!", call. = FALSE)
+        stop("cut_type not recognised!", call. = FALSE)
       }
     },
 
@@ -63,7 +69,7 @@ VectorBucketer <- R6Class("VectorBucketer",
     cut_by_quantile = function(cut_vector, buckets) {
       quantiles <- seq(0, 1, length.out = buckets)
       cut_points <- quantile(cut_vector, probs = quantiles)
-      cut(cut_vector, breaks = cut_points, include.lower = TRUE)
+      cut(cut_vector, breaks = cut_points, include.lowest = TRUE)
     }
   )
 )
