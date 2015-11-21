@@ -14,9 +14,10 @@ PlotlyPlotter <- R6Class("PlotlyPlotter",
     ),
 
     plot_df = function(dm) {
-      if (self$scale == "uniform") {
+      if (self$scale == "uniform" | self$scale == "factor") {
         return(self$plot_df_bar(dm))
-      } else if (self$scale == "cartesian") {
+      }
+      if (self$scale == "cartesian") {
         return(self$plot_df_hist(dm))
       } else {
         stop("scale not recognised!", call. = FALSE)

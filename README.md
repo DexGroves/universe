@@ -3,7 +3,7 @@ Plotly-powered univariates. Runs on `R6` and `data.table`.
 Very much a work in progress.
 
 Bucket data and draw univariate plots in plotly. Univariate plots show the
-variation of one or more variable versus one covariate. Also draws a neat
+variation of one or more variables versus one covariate. Also draws a neat
 exposure histogram.
 
 ## Things that don't work (non exhaustive)

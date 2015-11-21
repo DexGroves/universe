@@ -33,11 +33,14 @@ VectorBucketer <- R6Class("VectorBucketer",
       quantiles <- seq(0, 1, length.out = buckets)
       cut_points <- quantile(cut_vector, probs = quantiles)
       cut(cut_vector, breaks = unique(cut_points), include.lowest = TRUE)
+    },
+
+    cut_factor_by_exposure = function(cut_vector, buckets) {
+      tab <- table(cut_vector)
+      tab <- tab[order(tab, decreasing=TRUE)][1:(buckets - 1)]
+      cut_vector <- as.character(cut_vector)
+      cut_vector[!cut_vector %in% names(tab)] <- "OTHER"
+      as.factor(cut_vector)
     }
-    # ,
-
-    # cut_factor_by_exposure = function(cut_vector, buckets) {
-
-    # }
   )
 )
