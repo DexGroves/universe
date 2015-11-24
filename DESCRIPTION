@@ -3,7 +3,7 @@ Title: Simple Univariate Plotting
 Version: 0.1
 Authors@R: person("Dex", "Groves", email = "dex.groves@gmail.com", role = c("aut", "cre"))
 Description: Bucket data and draw univariate plots in plotly. Univariate plots show the variation of one or more variable versus one covariate. universe will also draw a neat exposure histogram.
-Depends: R (>= 3.2.2), R6, plotly, data.table
+Depends: R (>= 3.2), R6, plotly, data.table
 Imports: data.table
 License: GPL (>= 2)
 LazyData: true
