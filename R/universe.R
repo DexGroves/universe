@@ -56,3 +56,27 @@ universe <- function(input_df,
 
   pp$plot_df(dm)
 }
+
+#' Simple univariate plots, without the plot. Just the data.table.
+#'
+#' Performs all the preprocessing of `universe`, but stops short of calling
+#' plotly and returns its data structure. Use with your own plotly methods for
+#' greater control.
+#' @inheritParams universe
+universe_df <- function(input_df,
+                        plot_cols,
+                        by_col,
+                        buckets = 10,
+                        cut_type = "even",
+                        scale = "uniform") {
+  if (is.factor(input_df[[by_col]]) | is.character(input_df[[by_col]])) {
+    scale <- "factor"
+  }
+
+  dm <- DataMunger$new(input_df, plot_cols, by_col, cut_type)
+
+  dm$bucket_data(buckets)
+  dm$melt_df(scale)
+
+  dm$melted_df
+}
