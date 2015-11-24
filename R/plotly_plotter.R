@@ -2,16 +2,24 @@ PlotlyPlotter <- R6Class("PlotlyPlotter",
   # Create plotly objects from a melted dataframe.
   public = list(
     scale = NA,
+    xaxis = NA,
+    yaxis = NA,
+    yaxis2 = NA,
 
-    initialize = function(scale) {
+    initialize = function(scale, xtitle, ytitle) {
       self$scale <- scale
-    },
 
-    secondary_axis_options = list(
-      tickfont = list(color = "red"),
-      overlaying = "y",
-      side = "right"
-    ),
+
+      self$xaxis = list(title = xtitle)
+      self$yaxis = list(title = ytitle)
+
+      self$yaxis2 = list(
+        title = "Exposure",
+        overlaying = "y",
+        side = "right",
+        showgrid = FALSE
+     )
+    },
 
     plot_df = function(dm) {
       if (self$scale == "uniform" | self$scale == "factor") {
@@ -36,8 +44,8 @@ PlotlyPlotter <- R6Class("PlotlyPlotter",
                   type = "histogram",
                   opacity = 0.3,
                   orientation = "v",
-                  yaxis = "y2") %>%
-        layout(yaxis2 = self$secondary_axis_options)
+                   yaxis = "y2") %>%
+        {self$set_layout(.)}
     },
 
     plot_df_bar = function(dm) {
@@ -55,8 +63,15 @@ PlotlyPlotter <- R6Class("PlotlyPlotter",
                   group = variable,
                   opacity = 0.3,
                   orientation = "v",
-                  yaxis = "y2") %>%
-        layout(yaxis2 = self$secondary_axis_options)
+                   yaxis = "y2") %>%
+        {self$set_layout(.)}
+    },
+
+    set_layout = function(p) {
+      layout(p,
+             xaxis = self$xaxis,
+             yaxis = self$yaxis,
+             yaxis2 = self$yaxis2)
     }
   )
 )

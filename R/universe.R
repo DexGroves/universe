@@ -40,14 +40,16 @@ universe <- function(input_df,
                      by_col,
                      buckets = 10,
                      cut_type = "even",
-                     scale = "uniform") {
+                     scale = "uniform",
+                     xtitle = by_col,
+                     ytitle = "") {
 
   if (is.factor(input_df[[by_col]]) | is.character(input_df[[by_col]])) {
     scale <- "factor"
   }
 
   dm <- DataMunger$new(input_df, plot_cols, by_col, cut_type)
-  pp <- PlotlyPlotter$new(scale)
+  pp <- PlotlyPlotter$new(scale, xtitle, ytitle)
 
   dm$bucket_data(buckets)
   dm$melt_df(scale)
