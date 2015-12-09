@@ -25,12 +25,12 @@ VectorBucketer <- R6Class("VectorBucketer",
     cut_evenly = function(cut_vector, buckets) {
       lower <- min(cut_vector)
       upper <- max(cut_vector)
-      cut_points <- seq(lower, upper, length.out = buckets)
+      cut_points <- seq(lower, upper, length.out = (buckets+1))
       cut(cut_vector, breaks = unique(cut_points), include.lowest = TRUE)
     },
 
     cut_by_quantile = function(cut_vector, buckets) {
-      quantiles <- seq(0, 1, length.out = buckets)
+      quantiles <- seq(0, 1, length.out = (buckets+1))
       cut_points <- quantile(cut_vector, probs = quantiles)
       cut(cut_vector, breaks = unique(cut_points), include.lowest = TRUE)
     },
