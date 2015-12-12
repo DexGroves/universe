@@ -12,6 +12,8 @@ make_fake_data <- function(N) {
 set.seed(1234)
 df <- make_fake_data(1e4)
 df$factor1 <- sample(letters, 1e4, TRUE)
+df$factor2 <- c(sample(letters, 9e3, TRUE), rep(NA, 1e3))
+df$factor3 <- sample(letters[1:5], 1e4, TRUE)
 plot_cols <- c("response1", "response2", "response3")
 
 even_unif <- universe(df, plot_cols, "numeric1", 20)
@@ -20,6 +22,8 @@ even_cart <- universe(df, plot_cols, "numeric1", 20, scale = "cartesian")
 quant_cart <- universe(df, plot_cols, "numeric1", 20, cut_type = "quantile",
                        scale = "cartesian")
 factor_unif <- universe(df, plot_cols, "factor1", 20)
+factor_unif_na <- universe(df, plot_cols, "factor2", 20)
+factor_unif_no_other <- universe(df, plot_cols, "factor3", 20)
 
 
 test_that("even and uniform working end-to-end", {
@@ -119,7 +123,14 @@ test_that("factor plots working end-to-end", {
   expect_is(factor_unif$grp_by_col, "factor")
   expect_equal(nlevels(factor_unif$grp_by_col), 20)
 
-  expected_val <- c(405, 402, 398, 375, 381, 406, 378, 399, 398, 379, 400, 2501,
-                    403, 393, 395, 408, 387, 392, 422, 378)
+  expected_val <- c(422, 408, 406, 405, 403, 402, 400, 399, 398, 398, 395,
+                    393, 392, 387, 381, 379, 378, 378, 375, 2501)
   expect_equal(factor_unif$value, expected_val)
+
+  expected_val_na <- c(414, 404, 384, 377, 362, 360, 358, 353, 352, 349, 349,
+                       348, 348, 344, 340, 338, 336, 334, 330, 2220, 1000)
+  expect_equal(factor_unif_na$value, expected_val_na)
+
+  expected_val_no_other <- c(2061, 2034, 2002, 1991, 1912)
+  expect_equal(factor_unif_no_other$value, expected_val_no_other)
 })
