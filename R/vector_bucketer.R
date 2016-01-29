@@ -39,8 +39,10 @@ VectorBucketer <- R6Class("VectorBucketer",
       tab <- table(cut_vector)
       tab <- tab[order(tab, decreasing=TRUE)][1:(buckets - 1)]
       cut_vector <- as.character(cut_vector)
-      cut_vector[!cut_vector %in% names(tab)] <- "OTHER"
-      as.factor(cut_vector)
+      cut_vector[!cut_vector %in% names(tab) & !is.na(cut_vector)] <- "OTHER"
+      cut_vector[is.na(cut_vector)] <- "NA"
+      cut_vector <- factor(cut_vector, levels=c(names(tab), "OTHER", "NA"))
+      cut_vector[drop=TRUE]
     }
   )
 )
