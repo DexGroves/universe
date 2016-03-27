@@ -34,38 +34,46 @@ PlotlyPlotter <- R6Class("PlotlyPlotter",
     },
 
     plot_df_hist = function(data_munger) {
-      lines_df <- data_munger$melted_df[variable != "weight"]
-
-      plot_ly(lines_df,
-              x = grp_by_col,
-              y = value,
-              group = variable) %>%
-        add_trace(x = data_munger$df[[data_munger$by_col]],
-                  type = "histogram",
-                  opacity = 0.3,
-                  orientation = "v",
-                   yaxis = "y2") %>%
+      self$plot_lines(data_munger) %>%
+        {self$add_histogram_trace(., data_munger)} %>%
         {self$set_layout(.)}
     },
 
     plot_df_bar = function(data_munger) {
+      self$plot_lines(data_munger) %>%
+        {self$add_bar_trace(., data_munger)} %>%
+        {self$set_layout(.)}
+    },
+
+    plot_lines = function(data_munger) {
       lines_df <- data_munger$melted_df[variable != "weight" &
                                         variable != data_munger$by_col]
-      bars_df  <- data_munger$melted_df[variable == "weight"]
-
       plot_ly(lines_df,
               x = grp_by_col,
               y = value,
-              group = variable) %>%
-        add_trace(data = bars_df,
-                  type = "bar",
-                  x = grp_by_col,
-                  y = value,
-                  group = variable,
-                  opacity = 0.3,
-                  orientation = "v",
-                   yaxis = "y2") %>%
-        {self$set_layout(.)}
+              group = variable)
+    },
+
+    add_histogram_trace = function(plot, data_munger) {
+      add_trace(plot,
+                x = data_munger$df[[data_munger$by_col]],
+                type = "histogram",
+                opacity = 0.3,
+                orientation = "v",
+                yaxis = "y2")
+    },
+
+    add_bar_trace = function(plot, data_munger) {
+      bars_df  <- data_munger$melted_df[variable == "weight"]
+      add_trace(plot,
+                data = bars_df,
+                type = "bar",
+                x = grp_by_col,
+                y = value,
+                group = variable,
+                opacity = 0.3,
+                orientation = "v",
+                yaxis = "y2")
     },
 
     set_layout = function(p) {
