@@ -1,6 +1,6 @@
+#' Handle everything to do with producing a melted dataframe to feed into plot
+#' methods later.
 DataMunger <- R6Class("DataMunger",
-  # Handle everything to do with producing a melted dataframe to feed into plot
-  # methods later.
   public = list(
     plot_cols = NA,
     by_col = NA,

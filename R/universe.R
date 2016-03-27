@@ -48,13 +48,13 @@ universe <- function(input_df,
     scale <- "factor"
   }
 
-  dm <- DataMunger$new(input_df, plot_cols, by_col, cut_type)
-  pp <- PlotlyPlotter$new(scale, xtitle, ytitle)
+  munger <- DataMunger$new(input_df, plot_cols, by_col, cut_type)
+  plotter <- PlotlyPlotter$new(scale, xtitle, ytitle)
 
-  dm$bucket_data(buckets)
-  dm$melt_df(scale)
+  munger$bucket_data(buckets)
+  munger$melt_df(scale)
 
-  pp$plot_df(dm)
+  plotter$plot_df(munger)
 }
 
 #' Simple univariate plots, without the plot. Just the data.table.

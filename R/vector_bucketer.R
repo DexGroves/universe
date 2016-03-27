@@ -1,5 +1,5 @@
+#' Handle bucketing of the by variable.
 VectorBucketer <- R6Class("VectorBucketer",
-  # Handle bucketing of the by variable.
   public = list(
     cut_type = NA,
 

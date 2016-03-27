@@ -1,5 +1,5 @@
+#' Create plotly objects from a melted dataframe.
 PlotlyPlotter <- R6Class("PlotlyPlotter",
-  # Create plotly objects from a melted dataframe.
   public = list(
     scale = NA,
     xaxis = NA,
@@ -21,26 +21,26 @@ PlotlyPlotter <- R6Class("PlotlyPlotter",
      )
     },
 
-    plot_df = function(dm) {
+    plot_df = function(data_munger) {
       if (self$scale == "uniform" | self$scale == "factor") {
-        return(self$plot_df_bar(dm))
+        return(self$plot_df_bar(data_munger))
       }
       if (self$scale == "cartesian") {
-        return(self$plot_df_hist(dm))
+        return(self$plot_df_hist(data_munger))
       } else {
         stop("scale not recognised!", call. = FALSE)
       }
       invisible()
     },
 
-    plot_df_hist = function(dm) {
-      lines_df <- dm$melted_df[variable != "weight"]
+    plot_df_hist = function(data_munger) {
+      lines_df <- data_munger$melted_df[variable != "weight"]
 
       plot_ly(lines_df,
-              x = get(dm$by_col),
+              x = get(data_munger$by_col),
               y = value,
               group = variable) %>%
-        add_trace(x = dm$df[[dm$by_col]],
+        add_trace(x = data_munger$df[[data_munger$by_col]],
                   type = "histogram",
                   opacity = 0.3,
                   orientation = "v",
@@ -48,9 +48,10 @@ PlotlyPlotter <- R6Class("PlotlyPlotter",
         {self$set_layout(.)}
     },
 
-    plot_df_bar = function(dm) {
-      lines_df <- dm$melted_df[variable != "weight" & variable != dm$by_col]
-      bars_df  <- dm$melted_df[variable == "weight"]
+    plot_df_bar = function(data_munger) {
+      lines_df <- data_munger$melted_df[variable != "weight" &
+                                        variable != data_munger$by_col]
+      bars_df  <- data_munger$melted_df[variable == "weight"]
 
       plot_ly(lines_df,
               x = grp_by_col,
