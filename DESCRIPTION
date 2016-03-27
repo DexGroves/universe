@@ -1,9 +1,20 @@
 Package: universe
 Title: Simple Univariate Plotting
-Version: 0.1
+Version: 0.2
 Authors@R: person("Dex", "Groves", email = "dex.groves@gmail.com", role = c("aut", "cre"))
-Description: Bucket data and draw univariate plots in plotly. Univariate plots show the variation of one or more variable versus one covariate. universe will also draw a neat exposure histogram.
-Depends: R (>= 3.2), R6, plotly, data.table
-Imports: data.table
+Description: Bucket data and draw univariate plots in plotly. Univariate plots
+    show the variation of one or more variable versus one covariate. universe will
+    also draw a neat exposure histogram.
+Depends:
+    R (>= 3.2),
+    R6,
+    plotly,
+    data.table,
+    ggplot2,
+    gtable,
+    grid
+Imports:
+    data.table
 License: GPL (>= 2)
 LazyData: true
+RoxygenNote: 5.0.1

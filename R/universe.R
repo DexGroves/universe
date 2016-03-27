@@ -42,19 +42,22 @@ universe <- function(input_df,
                      cut_type = "even",
                      scale = "uniform",
                      xtitle = by_col,
-                     ytitle = "") {
+                     ytitle = "",
+                     backend = "plotly") {
 
   if (is.factor(input_df[[by_col]]) | is.character(input_df[[by_col]])) {
     scale <- "factor"
   }
 
+  plotting_backend <- get_plotting_backend(backend)
+
   munger <- DataMunger$new(input_df, plot_cols, by_col, cut_type)
-  plotter <- PlotlyPlotter$new(scale, xtitle, ytitle)
+  plotter <- plotting_backend$new(scale, xtitle, ytitle)
 
   munger$bucket_data(buckets)
   munger$melt_df(scale)
 
-  plotter$plot_df(munger)
+  plotter$plot_fn(munger)
 }
 
 #' Simple univariate plots, without the plot. Just the data.table.
@@ -78,5 +81,18 @@ universe_df <- function(input_df,
   dm$bucket_data(buckets)
   dm$melt_df(scale)
 
-  dm$melted_df
+  # dm$melted_df
+  dm
+}
+
+get_plotting_backend <- function(backend) {
+  if (backend == "plotly") {
+    return(PlotlyPlotter)
+  }
+  else if (backend == "ggplot2") {
+    return(GgplotPlotter)
+  }
+  else {
+    stop("Backend not recognised!", call. = FALSE)
+  }
 }
