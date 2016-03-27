@@ -61,7 +61,8 @@ DataMunger <- R6Class("DataMunger",
     melt_df_cartesian = function() {
       self$melted_df <- melt(self$bucketed_df[, !"grp_by_col", with = FALSE],
                              id.vars = self$by_col)
-      setkeyv(self$melted_df, self$by_col)
+      setnames(self$melted_df, self$by_col, "grp_by_col")
+      setkey(self$melted_df, grp_by_col)
     },
 
     melt_df_uniform = function() {

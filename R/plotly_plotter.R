@@ -37,7 +37,7 @@ PlotlyPlotter <- R6Class("PlotlyPlotter",
       lines_df <- data_munger$melted_df[variable != "weight"]
 
       plot_ly(lines_df,
-              x = get(data_munger$by_col),
+              x = grp_by_col,
               y = value,
               group = variable) %>%
         add_trace(x = data_munger$df[[data_munger$by_col]],

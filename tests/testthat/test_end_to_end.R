@@ -51,7 +51,7 @@ test_that("quantile and uniform working end-to-end", {
 test_that("even and cartesian working end-to-end", {
   expect_is(even_cart, "plotly")
   expect_is(even_cart, "data.table")
-  expect_is(even_cart$numeric1, "numeric")
+  expect_is(even_cart$grp_by_col, "numeric")
 
   expected_x <- c(-3.7, -3.17, -2.84, -2.49, -2.12, -1.73, -1.36, -1, -0.62, -0.26,
                   0.12, 0.48, 0.85, 1.23, 1.6, 1.96, 2.35, 2.71, 3.02, 3.47)
@@ -68,11 +68,11 @@ test_that("even and cartesian working end-to-end", {
                      0.011, -0.023, -0.025, 0.076, -0.004, -0.04, 0.043, 0.057, 0.025,
                      0.276, -0.35)
 
-  expect_equal(round(even_cart[variable == "response1", numeric1], 2),
+  expect_equal(round(even_cart[variable == "response1", grp_by_col], 2),
                expected_x)
-  expect_equal(round(even_cart[variable == "response2", numeric1], 2),
+  expect_equal(round(even_cart[variable == "response2", grp_by_col], 2),
                expected_x)
-  expect_equal(round(even_cart[variable == "response3", numeric1], 2),
+  expect_equal(round(even_cart[variable == "response3", grp_by_col], 2),
                expected_x)
 
   expect_equal(round(even_cart[variable == "response1", value], 3),
@@ -86,7 +86,7 @@ test_that("even and cartesian working end-to-end", {
 test_that("quantile and cartesian working end-to-end", {
   expect_is(quant_cart, "plotly")
   expect_is(quant_cart, "data.table")
-  expect_is(quant_cart$numeric1, "numeric")
+  expect_is(quant_cart$grp_by_col, "numeric")
 
   expected_x <- c(-2.04, -1.45, -1.16, -0.94, -0.76, -0.59, -0.45, -0.31, -0.18,
                   -0.05, 0.08, 0.21, 0.34, 0.48, 0.62, 0.77, 0.95, 1.17, 1.46, 2.08)
@@ -102,11 +102,11 @@ test_that("quantile and cartesian working end-to-end", {
   expected_val3 <- c(-0.001, 0.01, 0.003, -0.013, 0.051, 0.02, -0.037, 0.026, 0.025, -0.03,
                      -0.009, -0.066, -0.071, 0.038, 0.037, 0.016, 0.088, -0.002, -0.023, 0.021)
 
-  expect_equal(round(quant_cart[variable == "response1", numeric1], 2),
+  expect_equal(round(quant_cart[variable == "response1", grp_by_col], 2),
                expected_x)
-  expect_equal(round(quant_cart[variable == "response2", numeric1], 2),
+  expect_equal(round(quant_cart[variable == "response2", grp_by_col], 2),
                expected_x)
-  expect_equal(round(quant_cart[variable == "response3", numeric1], 2),
+  expect_equal(round(quant_cart[variable == "response3", grp_by_col], 2),
                expected_x)
 
   expect_equal(round(quant_cart[variable == "response1", value], 3),
