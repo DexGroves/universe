@@ -1,25 +1,25 @@
 #' Handle bucketing of the by variable.
 VectorBucketer <- R6Class("VectorBucketer",
   public = list(
-    cut_type = NA,
+    cut_fn = NA,
 
     initialize = function(cut_type) {
-      self$cut_type <- cut_type
+      if (cut_type == "even") {
+        self$cut_fn <- self$cut_evenly
+      }
+      else if (cut_type == "quantile") {
+        self$cut_fn <- self$cut_by_quantile
+      }
+      else {
+        stop("cut_type not recognised!", call. = FALSE)
+      }
     },
 
     cut_vector = function(cut_vector, buckets) {
       if (is.factor(cut_vector) | is.character(cut_vector)) {
         return(self$cut_factor_by_exposure(cut_vector, buckets))
       }
-      if (self$cut_type == "even") {
-        return(self$cut_evenly(cut_vector, buckets))
-      }
-      if (self$cut_type == "quantile") {
-        return(self$cut_by_quantile(cut_vector, buckets))
-      }
-      else {
-        stop("cut_type not recognised!", call. = FALSE)
-      }
+      self$cut_fn(cut_vector, buckets)
     },
 
     cut_evenly = function(cut_vector, buckets) {
