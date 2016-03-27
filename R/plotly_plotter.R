@@ -1,4 +1,5 @@
 #' Create plotly objects from a melted dataframe.
+#' @import plotly
 PlotlyPlotter <- R6Class("PlotlyPlotter",
   public = list(
     plot_fn = NA,
@@ -46,13 +47,15 @@ PlotlyPlotter <- R6Class("PlotlyPlotter",
       plot_ly(lines_df,
               x = grp_by_col,
               y = value,
-              group = variable)
+              group = variable,
+              mode = "markers+lines")
     },
 
     add_histogram_trace = function(plot, data_munger) {
       add_trace(plot,
                 x = data_munger$df[[data_munger$by_col]],
                 type = "histogram",
+                name = "weight",
                 opacity = 0.3,
                 orientation = "v",
                 yaxis = "y2")
@@ -66,6 +69,7 @@ PlotlyPlotter <- R6Class("PlotlyPlotter",
                 x = grp_by_col,
                 y = value,
                 group = variable,
+                name = "weight",
                 opacity = 0.3,
                 orientation = "v",
                 yaxis = "y2")

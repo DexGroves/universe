@@ -8,7 +8,6 @@
 #' in by_col or evenly by quantile in by_col), then drawing the variation of
 #' the plot_cols vs by_col with a histogram of by_col's exposure.
 #'
-#' @import plotly
 #' @import R6
 #' @import data.table
 #' @export
