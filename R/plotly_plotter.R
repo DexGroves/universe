@@ -1,14 +1,21 @@
 #' Create plotly objects from a melted dataframe.
 PlotlyPlotter <- R6Class("PlotlyPlotter",
   public = list(
-    scale = NA,
+    plot_df = NA,
     xaxis = NA,
     yaxis = NA,
     yaxis2 = NA,
 
     initialize = function(scale, xtitle, ytitle) {
-      self$scale <- scale
-
+      if (scale == "uniform" | scale == "factor") {
+        self$plot_df <- self$plot_df_bar
+      }
+      else if (scale == "cartesian") {
+        self$plot_df <- self$plot_df_hist
+      }
+      else {
+        stop("scale not recognised!", call. = FALSE)
+      }
 
       self$xaxis = list(title = xtitle)
       self$yaxis = list(title = ytitle)
@@ -18,19 +25,7 @@ PlotlyPlotter <- R6Class("PlotlyPlotter",
         overlaying = "y",
         side = "right",
         showgrid = FALSE
-     )
-    },
-
-    plot_df = function(data_munger) {
-      if (self$scale == "uniform" | self$scale == "factor") {
-        return(self$plot_df_bar(data_munger))
-      }
-      if (self$scale == "cartesian") {
-        return(self$plot_df_hist(data_munger))
-      } else {
-        stop("scale not recognised!", call. = FALSE)
-      }
-      invisible()
+      )
     },
 
     plot_df_hist = function(data_munger) {
