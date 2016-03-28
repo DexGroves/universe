@@ -57,7 +57,8 @@ GgplotPlotter <- R6Class("GgplotPlotter",
                            group = variable, color = variable)) +
         geom_point() +
         geom_line() +
-        theme_bw()
+        theme_bw() +
+        theme(legend.position="bottom")
     },
 
     gg_exposure_bars = function(data_munger) {
