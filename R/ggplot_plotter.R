@@ -36,7 +36,10 @@ GgplotPlotter <- R6Class("GgplotPlotter",
     },
 
     plot_fn_cartesian = function(data_munger) {
-      stop("ggplot backend not implemented for cartesian", call. = FALSE)
+      self$ggplot_double_axis(
+        self$gg_base_lines(data_munger),
+        self$gg_exposure_hist(data_munger)
+      )
     },
 
     plot_fn_uniform = function(data_munger) {
@@ -63,6 +66,21 @@ GgplotPlotter <- R6Class("GgplotPlotter",
       ggplot(bars_df, aes(x = grp_by_col, y = value)) +
         geom_bar(stat = "identity", alpha = 0.3) +
         theme_bw() %+replace%
+        theme(panel.background = element_rect(fill = NA))
+    },
+
+    gg_exposure_hist = function(data_munger) {
+      hist_df <- data.table(col = data_munger$df[[data_munger$by_col]])
+
+      max_pt <- max(data_munger$melted_df$grp_by_col)
+      min_pt <- min(data_munger$melted_df$grp_by_col)
+      hist_df <- hist_df[col >= min_pt & col <= max_pt]
+
+      ggplot(hist_df, aes(x = col)) +
+        geom_histogram(bins = 100, alpha = 0.2) +
+        theme_bw() +
+        theme(panel.grid.major = element_blank(),
+              panel.grid.minor = element_blank()) %+replace%
         theme(panel.background = element_rect(fill = NA))
     },
 
