@@ -16,11 +16,7 @@ DataMunger <- R6Class("DataMunger",
       self$vb <- VectorBucketer$new(cut_type)
       self$df <- self$generate_core_df(input_df)
 
-      if (is.character(self$df[[by_col]]) | is.factor(self$df[[by_col]])) {
-        self$reduce_fn <- self$mean_unless_char
-      } else {
-        self$reduce_fn <- mean
-      }
+      self$reduce_fn <- self$mean_unless_char
     },
 
     generate_core_df = function(input_df) {
@@ -39,7 +35,7 @@ DataMunger <- R6Class("DataMunger",
     },
 
     reduce_df = function(sd) {
-        c(weight = as.double(nrow(sd)), lapply(sd, self$reduce_fn))
+      c(weight = as.double(nrow(sd)), lapply(sd, self$reduce_fn))
     },
 
     mean_unless_char =  function(var) {
