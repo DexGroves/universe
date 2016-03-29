@@ -44,7 +44,7 @@ universe <- function(input_df,
                      ytitle = "",
                      backend = "plotly") {
 
-  if (is.factor(input_df[[by_col]]) | is.character(input_df[[by_col]])) {
+  if (is_char_or_factor(input_df[[by_col]])) {
     scale <- "factor"
   }
 
@@ -89,4 +89,8 @@ get_plotting_backend <- function(backend) {
   else {
     stop("Backend not recognised!", call. = FALSE)
   }
+}
+
+is_char_or_factor <- function(var) {
+  is.factor(var) | is.character(var)
 }

@@ -14,12 +14,12 @@ DataMunger <- R6Class("DataMunger",
     initialize = function(input_df, plot_cols, by_col, cut_type, scale) {
       self$plot_cols <- plot_cols
       self$by_col <- by_col
+      self$summarise_fn <- self$mean_unless_char
 
       self$bucketer <- VectorBucketer$new(cut_type)
       self$melter <- DataMelter$new(scale)
-      self$df <- self$generate_core_df(input_df)
 
-      self$summarise_fn <- self$mean_unless_char
+      self$df <- self$generate_core_df(input_df)
     },
 
     prepare_data = function(buckets) {
