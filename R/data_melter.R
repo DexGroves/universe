@@ -1,3 +1,4 @@
+#' Handle melting of data according to the taxonomy of the input.
 DataMelter <- R6Class("DataMelter",
   public = list(
     melt_data = NA,
