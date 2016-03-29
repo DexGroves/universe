@@ -49,12 +49,10 @@ universe <- function(input_df,
   }
 
   plotting_backend <- get_plotting_backend(backend)
-
-  munger <- DataMunger$new(input_df, plot_cols, by_col, cut_type)
   plotter <- plotting_backend$new(scale, xtitle, ytitle)
 
-  munger$bucket_data(buckets)
-  munger$melt_df(scale)
+  munger <- DataMunger$new(input_df, plot_cols, by_col, cut_type, scale)
+  munger$prepare_data(buckets)
 
   plotter$plot_fn(munger)
 }
@@ -75,13 +73,10 @@ universe_df <- function(input_df,
     scale <- "factor"
   }
 
-  dm <- DataMunger$new(input_df, plot_cols, by_col, cut_type)
+  munger <- DataMunger$new(input_df, plot_cols, by_col, cut_type, scale)
+  munger$prepare_data(buckets)
 
-  dm$bucket_data(buckets)
-  dm$melt_df(scale)
-
-  # dm$melted_df
-  dm
+  munger$melted_df
 }
 
 get_plotting_backend <- function(backend) {
