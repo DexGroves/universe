@@ -22,8 +22,14 @@
 GgplotPlotter <- R6Class("GgplotPlotter",
   public = list(
     plot_fn = NA,
+    ytitle = NA,
+    xtitle = NA,
+
 
     initialize = function(scale, xtitle, ytitle) {
+      self$xtitle <- xtitle
+      self$ytitle <- ytitle
+
       if (scale == "uniform" | scale == "factor") {
         self$plot_fn <- self$plot_fn_uniform
       }
@@ -58,7 +64,10 @@ GgplotPlotter <- R6Class("GgplotPlotter",
         geom_point() +
         geom_line() +
         theme_bw() +
-        theme(legend.position="bottom")
+        xlab(self$xtitle) +
+        ylab(self$ytitle) +
+        theme(legend.position = "bottom") +
+        theme(legend.title = element_blank())
     },
 
     gg_exposure_bars = function(data_munger) {

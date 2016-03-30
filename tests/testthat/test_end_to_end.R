@@ -1,4 +1,4 @@
-context("End-to-end tests")
+context("End-to-end plotly backend tests")
 
 make_fake_data <- function(N) {
   data.frame(response1 = rnorm(N),
