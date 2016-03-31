@@ -63,6 +63,7 @@ GgplotPlotter <- R6Class("GgplotPlotter",
                            group = variable, color = variable)) +
         geom_point() +
         geom_line() +
+        ylim(c(min(min(lines_df$value), 0), max(max(lines_df$value), 0))) +
         theme_bw() +
         xlab(self$xtitle) +
         ylab(self$ytitle) +
