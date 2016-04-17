@@ -11,10 +11,13 @@ exposure histogram.
 2. Weights
 3. ~~Axis labels~~
 
+### How to install
+```R
+# install.packages("devtools")
+devtools::install_github("DexGroves/universe")
+```
 ### How to plot
 ```R
-# devtools::install_github("DexGroves/universe")
-
 library("ggplot2")
 library("universe")
 
